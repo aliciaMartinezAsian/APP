@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -46,7 +47,7 @@ public class FrmPrincipal extends JFrame {
 		panel.add(btn3);
 		panel.add(btn4);
 		panel.add(btn5);
-		panel.add(btn6);
+		panel.add(btn6);	
 		
 		
 		getContentPane().add(panel, BorderLayout.CENTER);
@@ -60,7 +61,12 @@ public class FrmPrincipal extends JFrame {
 		lblImagen.setHorizontalAlignment(SwingConstants.CENTER); 
 		getContentPane().add(lblImagen, BorderLayout.EAST);
 		
+		JPanel northPanel = new JPanel(new BorderLayout());
+		northPanel.add(lblTitulo, BorderLayout.NORTH);
+		northPanel.add(lblImagen, BorderLayout.CENTER);
 		
+		getContentPane().add(northPanel, BorderLayout.NORTH);
+
 
 		addListeners();
 

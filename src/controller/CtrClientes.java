@@ -85,7 +85,7 @@ public class CtrClientes {
 	public Cliente getCliente(int id) throws Exception {
 		Cliente p = null;
 		Database.open();
-		String sql = "SELECT * FROM persona WHERE id_persona=?";
+		String sql = "SELECT * FROM Cliente WHERE id=?";
 		ResultSet rs = Database.executePreparedQuery(sql, id);
 		while (rs.next()) {
 			p = new Cliente();

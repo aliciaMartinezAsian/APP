@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,46 +25,45 @@ public class FrmClientes extends JFrame {
 
 	public static JTextField txtBuscar, txtId, txtDni, txtNombre, txtApellidos, txtCorreo;
 
-	private JButton btnNuevo, btnBorrar;
+	private JButton btnNuevo, btnBorrar, btnActualizar, btnBuscar;
+
+	private DefaultTableModel model;
 
 	public FrmClientes() throws Exception {
 
-
 		setTitle("Gestión clientes");
-		setSize(700, 220);
+		setSize(700, 250);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("img/icono.png"));
-		
+
 		CtrClientes ctr = new CtrClientes();
 		List<String> dataList = new ArrayList<>();
-	
 
-		  // Recorrer la lista de clientes y agregar la representación en cadena de cada cliente
-        for (Cliente c : ctr.lstClientes()) {
-            dataList.add(c.toString());
-        }
+		// Recorrer la lista de clientes y agregar la representación en cadena de cada
+		// cliente
+		for (Cliente c : ctr.lstClientes()) {
+			dataList.add(c.toString());
+		}
 
-        // Suponiendo que cada cliente tiene el mismo número de campos
-        int numeroColumnas = dataList.get(0).split(",").length;
+		// Suponiendo que cada cliente tiene el mismo número de campos
+		int numeroColumnas = dataList.get(0).split(",").length;
 
-        // Convertir la lista en una matriz
-        Object[][] datate = new Object[dataList.size()][numeroColumnas];
-        for (int i = 0; i < dataList.size(); i++) {
-            String[] campos = dataList.get(i).split(",");
-            datate[i] = campos;
-        }
+		// Convertir la lista en una matriz
+		Object[][] datate = new Object[dataList.size()][numeroColumnas];
+		for (int i = 0; i < dataList.size(); i++) {
+			String[] campos = dataList.get(i).split(",");
+			datate[i] = campos;
+		}
 
-        String[] columnasNames = ctr.obtenerColumnas();
+		String[] columnasNames = ctr.obtenerColumnas();
 
-       
-     		DefaultTableModel model = new DefaultTableModel(datate, columnasNames);
-     		JTable table = new JTable(model);
+		model = new DefaultTableModel(datate, columnasNames);
+		JTable table = new JTable(model);
 
-     		JScrollPane scrollPane = new JScrollPane(table);
+		JScrollPane scrollPane = new JScrollPane(table);
 
-        
 		this.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
 		JPanel panBotones = new JPanel();
@@ -75,11 +75,17 @@ public class FrmClientes extends JFrame {
 		txtBuscar.setColumns(10);
 		panBotones.add(txtBuscar);
 
+		btnBuscar = new JButton("Buscar");
+		panBotones.add(btnBuscar);
+
 		btnNuevo = new JButton("Nuevo");
 		panBotones.add(btnNuevo);
 
 		btnBorrar = new JButton("Borrar");
 		panBotones.add(btnBorrar);
+
+		btnActualizar = new JButton("Actualizar");
+		panBotones.add(btnActualizar);
 
 		this.getContentPane().add(panBotones, BorderLayout.SOUTH);
 
@@ -122,19 +128,76 @@ public class FrmClientes extends JFrame {
 
 		this.getContentPane().add(panFicha, BorderLayout.EAST);
 		panFicha.setLayout(new GridLayout(5, 2, 1, 5));
-
+		panFicha.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		addListeners();
 
 		setVisible(true);
 	}
 
-
 	private void addListeners() {
 		CtrClientes ctr = new CtrClientes();
-		
+
 		btnNuevo.addActionListener(e -> ctr.addCliente());
 		btnBorrar.addActionListener(e -> ctr.delPersona());
 
+		btnActualizar.addActionListener(e -> updateTable());
+
+		btnBuscar.addActionListener(e -> filterTableById());
+
 	}
 
+	private void updateTable() {
+		try {
+			CtrClientes ctr = new CtrClientes();
+			List<String> dataList = new ArrayList<>();
+
+			// Recorrer la lista de clientes y agregar la representación en cadena de cada
+			// cliente
+			for (Cliente c : ctr.lstClientes()) {
+				dataList.add(c.toString());
+			}
+
+			// Suponiendo que cada cliente tiene el mismo número de campos
+			int numeroColumnas = dataList.get(0).split(",").length;
+
+			// Convertir la lista en una matriz
+			Object[][] datate = new Object[dataList.size()][numeroColumnas];
+			for (int i = 0; i < dataList.size(); i++) {
+				String[] campos = dataList.get(i).split(",");
+				datate[i] = campos;
+			}
+
+			String[] columnasNames = ctr.obtenerColumnas();
+
+			// Actualizar el modelo de la tabla existente
+			model.setDataVector(datate, columnasNames);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void filterTableById() {
+		try {
+			CtrClientes ctr = new CtrClientes();
+			int id = Integer.parseInt(txtBuscar.getText());
+			Cliente c = ctr.getCliente(id);
+
+			if (c != null) {
+				Object[][] datate = new Object[1][5];
+				datate[0][0] = c.getId();
+				datate[0][1] = c.getDni();
+				datate[0][2] = c.getNombre();
+				datate[0][3] = c.getApellidos();
+				datate[0][4] = c.getEmail();
+
+				model.setDataVector(datate, ctr.obtenerColumnas());
+			} else {
+				model.setDataVector(new Object[0][5], ctr.obtenerColumnas());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 }
