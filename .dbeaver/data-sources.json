@@ -1,0 +1,35 @@
+{
+	"folders": {},
+	"connections": {
+		"msaccess_ucanaccess-18feebec771-3d029bd800780951": {
+			"provider": "generic",
+			"driver": "msaccess_ucanaccess",
+			"name": "Proyecto.mdb",
+			"save-password": true,
+			"configuration": {
+				"database": "C:\\Users\\Usuario\\eclipse-workspace\\POO\\Proyecto\\APP\\db\\Proyecto.mdb",
+				"url": "jdbc:ucanaccess://C:\\Users\\Usuario\\eclipse-workspace\\POO\\Proyecto\\APP\\db\\Proyecto.mdb",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"closeIdleConnection": true,
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": false,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800,
+			"auto-close-connections": true,
+			"close-connections-period": 14400
+		}
+	}
+}
