@@ -36,17 +36,23 @@ public class FrmPrincipal extends JFrame {
 	/**
 	 * Atributos que hacen referencia a los botones de la interfaz.
 	 */
+	
+	private JFrame context;
+	
 	// Declaración de botones
 	private JButton btn1;
 	private JButton btn2;
 	private JButton btn3;
 	private JButton btn4;
+	private JButton btn5;
 
 	/**
 	 * Constructor de la clase FrmPrincipal.
 	 * Configura la ventana y sus componentes.
 	 */
 	public FrmPrincipal() {
+		context = this;
+		
 		// Establece el layout del contenedor principal
 		getContentPane().setLayout(new BorderLayout());
 
@@ -62,6 +68,7 @@ public class FrmPrincipal extends JFrame {
 		btn2 = new JButton("Tratamientos");
 		btn3 = new JButton("Pagos");
 		btn4 = new JButton("Reservas");
+		btn5 = new JButton("Manual");
 
 		// Creación de un panel para los botones
 		JPanel panel = new JPanel();
@@ -69,6 +76,7 @@ public class FrmPrincipal extends JFrame {
 		panel.add(btn2);
 		panel.add(btn3);
 		panel.add(btn4);
+		panel.add(btn5);
 
 		// Añadir el panel de botones al centro del contenedor principal
 		getContentPane().add(panel, BorderLayout.CENTER);
@@ -110,6 +118,8 @@ public class FrmPrincipal extends JFrame {
 		btn3.addActionListener(e -> new FrmPagos());
 		
 		btn4.addActionListener(e -> new FrmReservas());
+		
+		btn5.addActionListener(e-> new Manual(context));
 
 	}
 }
