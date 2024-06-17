@@ -22,8 +22,20 @@ import javax.swing.table.DefaultTableModel;
 import controller.CtrClientes;
 import model.Cliente;
 
+/**
+ * <h2>Clase para la interfaz gráfica de gestión de clientes.</h2>
+ * <p>
+ * Extiende JFrame para proporcionar una ventana con componentes Swing.
+ * <p>
+ * 
+ * @author Alicia Martinez Asian
+ * @version 1.0
+ * @since 15/06/2024
+ */
 public class FrmClientes extends JFrame {
-
+	/**
+	 * Atributo para la serialización de objetos en Java.
+	 */
 	private static final long serialVersionUID = 1L;
 
 	// Campos de texto para búsqueda y detalles del cliente
@@ -38,9 +50,15 @@ public class FrmClientes extends JFrame {
 	// Modelo de la tabla para manejar los datos de los clientes
 	private DefaultTableModel model;
 
-	// Constructor de la clase FrmClientes
+	/**
+	 * <h2>Constructor por defecto de la clase FrmClientes.</h2>
+	 * <p>
+	 * Configura la ventana y sus componentes.
+	 * </p>
+	 */
+	// Contrusctor por defecto de la clase que configura la ventana y sus
+	// componentes
 	public FrmClientes() {
-
 		// Configuración de la ventana
 		setTitle("Gestión clientes");
 		setSize(750, 250);
@@ -61,7 +79,6 @@ public class FrmClientes extends JFrame {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Error lista clientes", "Error.", JOptionPane.ERROR_MESSAGE);
-
 		}
 
 		// Suponiendo que cada cliente tiene el mismo número de campos
@@ -73,6 +90,7 @@ public class FrmClientes extends JFrame {
 			String[] campos = dataList.get(i).split(",");
 			datate[i] = campos;
 		}
+
 		// Obtener los nombres de las columnas
 		String[] columnasNames = null;
 		try {
@@ -100,8 +118,7 @@ public class FrmClientes extends JFrame {
 
 		// ComboBox para seleccionar el atributo de búsqueda
 		lstAtributos = new JComboBox<>();
-		lstAtributos.setModel(
-				new DefaultComboBoxModel<String>(new String[] { "Id", "DNI", "Nombre", "Apellidos", "Email" }));
+		lstAtributos.setModel(new DefaultComboBoxModel<>(new String[] { "Id", "DNI", "Nombre", "Apellidos", "Email" }));
 		lstAtributos.setBounds(80, 45, 85, 20);
 		panBotones.add(lstAtributos);
 
@@ -177,7 +194,11 @@ public class FrmClientes extends JFrame {
 		setVisible(true);
 	}
 
-	// Método para añadir listeners a los botones
+	/**
+	 * <h2>Método que configura las acciones a realizar cuando se presionan los
+	 * botones.</h2>
+	 */
+	// Método para añadir los listeners a los botones
 	private void addListeners() {
 		CtrClientes ctr = new CtrClientes();
 
@@ -218,9 +239,14 @@ public class FrmClientes extends JFrame {
 		});
 	}
 
-	// Método para actualizar la tabla con los datos más recientes
+	/**
+	 * <h2>Método para actualizar la tabla con los datos más recientes después de
+	 * cambios.</h2>
+	 * 
+	 * @throws Exception si ocurre un error al actualizar la tabla
+	 */
+	// Método para actualizar la tabla después de cambios
 	private void actualizarTabla() throws Exception {
-
 		CtrClientes ctr = new CtrClientes();
 		List<String> dataList = new ArrayList<>();
 
@@ -247,9 +273,14 @@ public class FrmClientes extends JFrame {
 		model.setDataVector(datate, columnasNames);
 	}
 
-	// Método para filtrar los datos de la tabla según el criterio de búsqueda
+	/**
+	 * <h2>Método para filtrar los datos de la tabla según el criterio de
+	 * búsqueda.</h2>
+	 *
+	 * @throws Exception si ocurre un error al filtrar la tabla
+	 */
+	// Método para filtrar los datos de la tabla según el criterio de búsqueda.
 	private void filtrarTabla() throws Exception {
-
 		CtrClientes ctr = new CtrClientes();
 		Cliente c = ctr.getCliente();
 
